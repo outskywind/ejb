@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		">
+		
+		
+		<bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+			<property name="environment">
+				<props>
+					<prop key="java.naming.provider.url">localhost:8888</prop>
+					<prop key="java.naming.factory.initial"></prop>
+				</props>
+			
+			</property>
+		
+		</bean>
+		
+		
+		<bean id="mysqlDS" class="org.springframework.jndi.JndiObjectFactoryBean" lazy-init="true">
+			<property name="jndiName">
+				<value>java:/mysqlDS</value>
+			</property>
+			<property name="lookupOnStartup">
+				<value>false</value>
+			</property>
+		</bean>
+		
+		<bean id="oracleDS" class="org.springframework.jndi.JndiObjectFactoryBean" lazy-init="true">
+			<property name="jndiName">
+				<value>java:/oracleDS</value>
+			</property>
+			<property name="lookupOnStartup">
+				<value>false</value>
+			</property>
+			<property name="proxyInterface">
+				<value>javax.sql.DataSource</value>
+			</property>
+			<!--  local jndi not need to specifiy the jndi
+			<property name="jndiTemplate">
+				<ref bean=""/>
+			</property>
+			-->
+		</bean>
+		
+		
+		<!-- iBATIS 重要配置 -->
+		<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+			<property name="configLocation">
+			 	<value>sqlmap.xml</value>
+			</property>
+		
+		</bean>
+		
+		
+		<import resource="biz-context-customer.xml"/>
+		
+		
+</beans>

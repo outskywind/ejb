@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ivysettings>
+	<properties file="${ivy.settings.dir}/ivysettings.properties"></properties>
+	
+	<caches defaultCacheDir="${ivy.cache.dir}" /> 
+	
+	<settings defaultResolver="chained" />
+	<resolvers>
+		<chain name="chained" returnFirst="true" checkmodified="true">
+			<filesystem name="libs">
+				<ivy pattern="${repository.dir}/[organisation]/ivy.xml"/>
+				<artifact pattern="${repository.dir}/[module]/[artifact].[ext]"/>
+				<artifact pattern="${repository.dir}/[module]/[artifact]-[revision].[ext]"/>
+				<artifact pattern="${repository.dir}/[organisation]/[artifact].[ext]"/>
+				<artifact pattern="${repository.dir}/[organisation]/[artifact]-[revision].[ext]"/>
+				<artifact pattern="${repository.dir}/[organisation]/[revision]/[artifact]-[revision].[ext]"/>
+				<artifact pattern="${repository.dir}/[organisation]/[revision]/[artifact].[ext]"/>
+			</filesystem>
+			
+			<url name="mvnrepository">
+				<artifact pattern="http://repo1.maven.org/maven2/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]"/>
+			</url>
+
+		</chain>
+	
+	</resolvers>
+
+
+
+
+</ivysettings>

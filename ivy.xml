@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="com.qcy" module="Ejb" revision="1.0.0" status="release" publication="20130110142753" >
+	</info>
+	<dependencies>
+		<dependency org="aopalliance" name="aopalliance" rev="1.0" conf="default"/>
+		<dependency org="log4j" name="log4j" rev="1.2.17" conf="default"/>
+		<dependency org="org/quartz-scheduler" name="quartz" rev="2.2.1"/>
+		<dependency org="commons-logging" name="commons-logging" rev="1.1.2" conf="default"/>
+		<dependency org="commons-collections" name="commons-collections" rev="3.2.1" conf="default"/>
+		<dependency org="springframework" name="spring-aop" rev="3.2.5.RELEASE" conf="default"/>
+		<dependency org="springframework" name="spring-core" rev="3.2.5.RELEASE" conf="default"/>
+		<dependency org="springframework" name="spring-context" rev="3.2.5.RELEASE" conf="default"/>
+		<dependency org="springframework" name="spring-beans" rev="3.2.5.RELEASE" conf="default"/>
+		<dependency org="springframework" name="spring-context-support" rev="3.2.5.RELEASE" conf="default"/>
+		<dependency org="springframework" name="spring-orm" rev="3.2.5.RELEASE" conf="default"/>
+		<dependency org="springframework" name="spring-tx" rev="3.2.5.RELEASE" conf="default"/>
+		<dependency org="springframework" name="spring-jdbc" rev="3.2.5.RELEASE" conf="default"/>
+		<dependency org="commons-beanutils"  name="commons-beanutils" rev="1.9.1" conf="default"></dependency>
+		<dependency org="commons-digester"  name="commons-digester" rev="2.1" conf="default"></dependency>
+		<dependency org="slf4j"  name="slf4j-api" rev="1.7.6" conf="default"></dependency>
+		<dependency org="slf4j"  name="slf4j-log4j12" rev="1.7.6" conf="default"></dependency>
+	</dependencies>
+
+
+</ivy-module>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Ejb" basedir="." default="release" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property environment="env" />
+	<property name="project.root" value="${basedir}" />
+	<property name="lib.dir" value="${project.root}/lib" />
+	<property name="build.dir" value="${project.root}/build" />
+	<property name="src.ejb" value="${project.root}/ejbModule" />
+	<property name="src.spring" value="${project.root}/spring" />
+	<property name="config.dir" value="${project.root}/src/config" />
+	<property name="rel.dir" value="${project.root}/rel"/>
+	<property name="dist.dir" value="e:/dist/ejb" />
+	<property name="ear.dir" value="${project.root}/eardist" />
+	<property name="dmz.war.dir" value="${dist.dir}/dmz.war" />
+	<property name="meta-inf.dir" value="${project.root}/META-INF" />
+	<available property="ivy.present" classname="org.apache.ivy.Ivy" />
+	<fail unless="ivy.present" message="第三方包依赖工具没有安装,请把ivy-2.3.0.jar拷贝到${env.ANT_HOME}/lib" />
+	
+	<target name="default" depends="release">
+	
+	</target>
+	
+	<target name="release" depends="compile">
+		<!-- ejb jar -->
+		<jar jarfile="${rel.dir}/app-ejb.jar" update="true">
+			<fileset dir="${build.dir}">
+			</fileset>
+		</jar>
+		<mkdir dir="${rel.dir}/lib"/>
+		<copy todir="${rel.dir}/lib" overwrite="true">
+		     <fileset dir="${lib.dir}/necessary">
+		     	<include name="*.jar"/>
+		     </fileset>
+		</copy>
+		
+		
+		<!-- 发布ear包 -->
+		<jar jarfile="${dist.dir}/app.ear" update="true">
+			<fileset dir="${rel.dir}">
+				<include name="app-ejb.jar"/>
+				<include name="lib/*.jar"/>
+			</fileset>
+		</jar>
+		
+		<jar jarfile="${basedir}/client/services.jar" update="true">
+			<fileset dir="${build.dir}">
+				<include name="**/remote/**/*.class"/>
+			</fileset>
+		</jar>
+		
+		<!--  删除 tmp 目录 -->
+		<delete dir="${project.root}/.tmp"/>
+		
+	</target>
+	
+	<target name="get-lib">
+		<ivy:retrieve pattern="${lib.dir}/necessary/[artifact]-[revision].[ext]"/>
+	</target>
+	
+	<path id="compile-path">
+		<fileset dir="${lib.dir}"/>
+		<pathelement path="E:/wildfly-8.0.0.Final/bin/client/jboss-client.jar" />
+	</path>
+	
+	<target name="compile" >
+		
+		<mkdir dir="${project.root}/.tmp"/>
+		<copy todir="${project.root}/.tmp">
+			<fileset dir="${src.ejb}">
+				<include name="**/*.java"/>
+			</fileset>
+			<fileset dir="${src.spring}">
+				<include name="**/*.java"/>
+			</fileset>
+		</copy>
+		
+		<javac destdir="${build.dir}" srcdir="${project.root}/.tmp" includeantruntime="false" source="1.7" target="1.7"  debug="true" encoding="utf-8" failonerror="true">
+		<classpath refid="compile-path"/>
+		</javac>
+		
+		<copy todir="${build.dir}">
+			<fileset dir="${src.spring}/config">
+				<include name="*.xml"/>
+				<include name="log4j.properties"/>
+			</fileset>
+		</copy>
+		
+	</target>
+	
+	<target name="eardist" depends="release">
+		
+		<copy todir="${rel.dir}/META-INF">
+			<fileset dir="${meta-inf.dir}">
+			</fileset>
+		</copy>
+		<!--  发布ear在项目目录-->
+		<jar jarfile="${ear.dir}/app.ear" update="true">
+			<fileset dir="${rel.dir}">
+				<include name="app-ejb.jar"/>
+				<include name="lib/*.jar"/>
+				<include name="META-INF/**"/>
+			</fileset>
+		</jar>
+		
+		
+	</target>
+	
+	
+	<target name="clean">
+		<delete dir ="${build.dir}"/>
+		<delete dir ="${rel.dir}"/>
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${rel.dir}"/>
+	</target>
+	
+	
+
+</project>
