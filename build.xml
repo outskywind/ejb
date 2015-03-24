@@ -75,6 +75,8 @@
 			</fileset>
 		</copy>
 		
+		<mkdir dir="${build.dir}"/>
+		
 		<javac destdir="${build.dir}" srcdir="${project.root}/.tmp" includeantruntime="false" source="1.7" target="1.7"  debug="true" encoding="utf-8" failonerror="true">
 		<classpath refid="compile-path"/>
 		</javac>
